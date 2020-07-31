@@ -19,6 +19,7 @@ function addTwoNumbers($l1, $l2) {
     $nums2 = '';
     $keepLooping = true;
     $x = 0;
+    // get all node list numbers into two strings
     while($keepLooping){
         if($x != 0){
             if(isset($l1->val)){
@@ -46,25 +47,30 @@ function addTwoNumbers($l1, $l2) {
         }
         $x++;
     }
-
+    
+    // reverse all numbers and implode them together
     $nums1 = explode('_', $nums1);
     $nums2 = explode('_', $nums2);
     $nums1 = array_reverse($nums1);
     $nums2 = array_reverse($nums2);
     $nums1 = implode($nums1, '');
     $nums2 = implode($nums2, '');
-
+   
+    // All Huge Integers Calculations
     $result = shell_exec('echo "'.$nums1.'+'.$nums2.'"|bc');
+   
+    // clean up the result of calculation
     preg_match_all('/[0-9]+/', $result, $preg);
     $result = '';
     foreach($preg[0] as $m){
         $result .= $m;
     }
-
+    
+    // convert result string into array and reverse them
     $result = str_split($result);
     $result = array_reverse($result);
 
-
+    // convert result array to a list node
     $subResult = new ListNode();
     $eval = '$subResult';                
     for($x = 0; $x < count($result); $x++){
